@@ -1,1 +1,1 @@
-import { oneWay, readOnly } from "ember-alias-cps";
+import { oneWay, readOnly } from 'ember-alias-cps';

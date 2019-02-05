@@ -1,1 +1,1 @@
-import { mapBy } from "@ember/object/computed";
+import { mapBy } from '@ember/object/computed';

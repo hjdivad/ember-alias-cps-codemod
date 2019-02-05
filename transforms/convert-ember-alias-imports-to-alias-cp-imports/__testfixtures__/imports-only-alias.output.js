@@ -1,1 +1,1 @@
-import { alias } from "ember-alias-cps";
+import { alias } from 'ember-alias-cps';
