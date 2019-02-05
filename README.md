@@ -1,6 +1,5 @@
 # ember-alias-cps-codemod
 
-
 A collection of codemod's for ember-alias-cps-codemod.
 
 ## Usage
@@ -19,20 +18,22 @@ ember-alias-cps-codemod <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
 ## Transforms
 
 <!--TRANSFORMS_START-->
-<!--TRANSFORMS_END-->
+
+- [convert-ember-alias-imports-to-alias-cp-imports](transforms/convert-ember-alias-imports-to-alias-cp-imports/README.md)
+  <!--TRANSFORMS_END-->
 
 ## Contributing
 
 ### Installation
 
-* clone the repo
-* change into the repo directory
-* `yarn`
+- clone the repo
+- change into the repo directory
+- `yarn`
 
 ### Running tests
 
-* `yarn test`
+- `yarn test`
 
 ### Update Documentation
 
-* `yarn update-docs`
+- `yarn update-docs`
