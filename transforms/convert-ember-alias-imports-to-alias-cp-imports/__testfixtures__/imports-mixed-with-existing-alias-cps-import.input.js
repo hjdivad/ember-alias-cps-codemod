@@ -1,1 +1,1 @@
-import { alias, mapBy } from "@ember/object/computed";
+import { alias, mapBy } from '@ember/object/computed';

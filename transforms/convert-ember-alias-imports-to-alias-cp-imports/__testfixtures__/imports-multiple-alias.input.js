@@ -1,1 +1,1 @@
-import { oneWay, readOnly } from "@ember/object/computed";
+import { oneWay, readOnly } from '@ember/object/computed';
