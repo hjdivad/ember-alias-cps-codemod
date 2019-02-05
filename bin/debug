@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# run with -t TEST_FILE_PATTERN
+node --inspect-brk ./node_modules/.bin/jest -i $@

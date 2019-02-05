@@ -9,11 +9,24 @@
   "keywords": [
     "codemod-cli"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "codemod-cli": "^0.2.8"
   },
   "devDependencies": {
-    "jest": "^23.1.0"
+    "husky": "^1.3.1",
+    "jest": "^23.1.0",
+    "lint-staged": "^8.1.3"
   },
   "jest": {
     "testEnvironment": "node"
