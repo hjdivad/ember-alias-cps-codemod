@@ -2,6 +2,7 @@ import {
   oneWay,
   mapBy,
   readOnly,
+  reads,
   alias,
   something
 } from '@ember/object/computed';

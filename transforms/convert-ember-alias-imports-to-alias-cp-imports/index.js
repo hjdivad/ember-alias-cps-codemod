@@ -1,7 +1,7 @@
-const { getParser } = require("codemod-cli").jscodeshift;
-const { getOptions } = require("codemod-cli");
+const { getParser } = require('codemod-cli').jscodeshift;
+const { getOptions } = require('codemod-cli');
 
-const AliasImportNames = Object.freeze(["alias", "oneWay", "readOnly"]);
+const AliasImportNames = Object.freeze(['alias', 'reads', 'oneWay', 'readOnly']);
 
 function extractAliasImports(j, importDeclarationNode) {
   let aliasImportSpecifiers = new Set();
@@ -21,7 +21,7 @@ function extractAliasImports(j, importDeclarationNode) {
   if (aliasImportSpecifiers.size > 0) {
     let newImport = j.importDeclaration(
       Array.from(aliasImportSpecifiers),
-      j.literal("ember-alias-cps")
+      j.literal('ember-alias-cps')
     );
     importDeclaration.insertAfter(newImport);
   }
@@ -35,13 +35,13 @@ function extractAliasImports(j, importDeclarationNode) {
 module.exports = function transformer(file, api) {
   const j = getParser(api);
   const printOptions = {
-    quote: "single",
-    wrapColumn: 100
+    quote: 'single',
+    wrapColumn: 100,
   };
 
   // cf https://github.com/rwjblue/ember-qunit-codemod/blob/master/transforms/convert-module-for-to-setup-test/index.js
   return j(file.source)
-    .find(j.ImportDeclaration, { source: { value: "@ember/object/computed" } })
+    .find(j.ImportDeclaration, { source: { value: '@ember/object/computed' } })
     .forEach(p => extractAliasImports(j, p))
     .toSource(printOptions);
 };
