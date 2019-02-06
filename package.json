@@ -1,6 +1,7 @@
 {
   "name": "ember-alias-cps-codemod",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "test": "codemod-cli test",
     "update-docs": "codemod-cli update-docs"

@@ -1,6 +1,6 @@
 # ember-alias-cps-codemod
 
-A collection of codemod's for ember-alias-cps-codemod.
+A collection of codemods for ember-alias-cps-codemod.
 
 ## Usage
 
