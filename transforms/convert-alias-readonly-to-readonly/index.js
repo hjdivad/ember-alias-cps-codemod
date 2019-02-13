@@ -3,7 +3,9 @@ const { getOptions } = require('codemod-cli');
 const recast = require('recast');
 
 global.d = function d(o) {
-  if(!o) { return null; }
+  if (!o) {
+    return null;
+  }
 
   if (o.constructor.name === 'NodePath') {
     return recast.print(o).code;
@@ -14,18 +16,16 @@ global.d = function d(o) {
   }
 
   throw `No idea what this is: '${o}'`;
-}
+};
 
 function findAliasImport(j, ast) {
-  let importDeclarations = ast.find(j.ImportDeclaration, { source: { value: 'ember-alias-cps' }});
+  let importDeclarations = ast.find(j.ImportDeclaration, { source: { value: 'ember-alias-cps' } });
 
-  let matchingImportDeclaration = importDeclarations.
-    filter(n => j(n).find(j.ImportSpecifier, { imported: { name: 'alias' }})).
-    at(0);
+  let matchingImportDeclaration = importDeclarations
+    .filter(n => j(n).find(j.ImportSpecifier, { imported: { name: 'alias' } }))
+    .at(0);
 
-  return matchingImportDeclaration.
-    find(j.ImportSpecifier, { imported: { name: 'alias' }}).
-    at(0);
+  return matchingImportDeclaration.find(j.ImportSpecifier, { imported: { name: 'alias' } }).at(0);
 }
 
 function readOnlyCallInAliasReadOnlyChain(j, aliasCall) {
@@ -36,9 +36,9 @@ function readOnlyCallInAliasReadOnlyChain(j, aliasCall) {
   return j(aliasCall).closest(j.CallExpression, {
     callee: {
       property: {
-        name: 'readOnly'
-      }
-    }
+        name: 'readOnly',
+      },
+    },
   });
 }
 
@@ -51,29 +51,36 @@ function findAliasCalls(j, aliasImportSpecifier, ast) {
   // This is scope-unaware, so has
   //  false-negative: imported name assigned to var; that var called
   //  false-positive: imported name is shadowed in this scope
-  return ast.find(j.CallExpression, { callee: { name: localAliasName }});
+  return ast.find(j.CallExpression, { callee: { name: localAliasName } });
 }
 
 function findAliasReadOnlyCalls(j, aliasImportSpecifier, ast) {
   let aliasCalls = findAliasCalls(j, aliasImportSpecifier, ast);
-  let aliasReadOnlyCalls = aliasCalls.filter(n => isAliasCallInChainWithReadOnly(j, n))
+  let aliasReadOnlyCalls = aliasCalls.filter(n => isAliasCallInChainWithReadOnly(j, n));
 
   return aliasReadOnlyCalls;
 }
 
 function ensureReadOnlyImported(j, aliasImport) {
-  let importDeclaration = aliasImport.closest(j.ImportDeclaration, { source: { value: 'ember-alias-cps' }});
-  let readOnlySpecifier = importDeclaration.find(j.ImportSpecifier, { imported: { name: 'readOnly' }});
+  let importDeclaration = aliasImport.closest(j.ImportDeclaration, {
+    source: { value: 'ember-alias-cps' },
+  });
+  let readOnlySpecifier = importDeclaration.find(j.ImportSpecifier, {
+    imported: { name: 'readOnly' },
+  });
   if (readOnlySpecifier.length > 0) {
     return readOnlySpecifier;
   }
 
   // Does not handle name collisions (eg if readOnly is already imported and we
   // need to import readOnly as readOnly2
-  readOnlySpecifier = j.importSpecifier(j.identifier('readOnly'), j.identifier('readOnly'))
+  readOnlySpecifier = j.importSpecifier(j.identifier('readOnly'), j.identifier('readOnly'));
 
   // append as last specifier
-  importDeclaration.find(j.ImportSpecifier).at(-1).insertAfter(readOnlySpecifier);
+  importDeclaration
+    .find(j.ImportSpecifier)
+    .at(-1)
+    .insertAfter(readOnlySpecifier);
 
   // return the last specifier (the one we just created & appended)
   return importDeclaration.find(j.ImportSpecifier).at(-1);
@@ -106,7 +113,7 @@ module.exports = function transformer(file, api) {
   // do we import { alias } from 'ember-alias-cps' ?
   let aliasImportSpecifier = findAliasImport(j, ast);
 
-  if(aliasImportSpecifier.size() > 0) {
+  if (aliasImportSpecifier.size() > 0) {
     let aliasReadOnlyCalls = findAliasReadOnlyCalls(j, aliasImportSpecifier, ast);
     if (aliasReadOnlyCalls.size() > 0) {
       let readOnlyImportSpecifier = ensureReadOnlyImported(j, aliasImportSpecifier);
@@ -120,4 +127,4 @@ module.exports = function transformer(file, api) {
   }
 
   return ast.toSource(printOptions);
-}
+};
