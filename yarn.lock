@@ -3026,7 +3026,7 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jscodeshift@^0.5.1:
+jscodeshift@0.5.1, jscodeshift@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/jscodeshift/-/jscodeshift-0.5.1.tgz#4af6a721648be8638ae1464a190342da52960c33"
   integrity sha512-sRMollbhbmSDrR79JMAnhEjyZJlQQVozeeY9A6/KNuV26DNcuB3mGSCWXp0hks9dcwRNOELbNOiwraZaXXRk5Q==
