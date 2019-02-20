@@ -1,5 +1,9 @@
 # ember-alias-cps-codemod changelog
 
+## 0.1.3
+
+- pin jscodeshift to 0.5.1
+
 ## 0.1.2
 
 - add a transform for converting `alias().readOnly()` to `readOnly()`
